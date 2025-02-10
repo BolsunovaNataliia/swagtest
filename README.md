@@ -1,80 +1,84 @@
 <hr>
 🌈 INTRODUCTION
 <hr>
-This project is a set of automated tests that are used to cover login functionality of the test site [Swag Labs](https://www.saucedemo.com/).
+This project is a set of automated tests that are used to cover login functionality of the test site https://www.saucedemo.com/.
 
 Login tests are written with the [WebdriverIO](https://webdriver.io/) framework and Cucumber as a BDD tool.
 
 It's created using Page Object Model.
 
 <hr>
-💥 INSTALLATION PROCESS
+💥 INSTALLATION
 <hr>
 
 If you need:
-* Install Node.js
-  ```cls
-  >  https://nodejs.org/en/download/
-  ```
-* Install VSCode
-  ```cls
-  >  https://code.visualstudio.com/
-  ```
+* Install [Node.js](https://nodejs.org/en/download/)
   
+* Install [VSCode](https://code.visualstudio.com/)
+    
 And then you can:  
 * Clone the repository to your machine
 
 * Install npm
-  ```cls
+  ```bash
   >  npm i
   ```
 
 * Install WebdriverIO
-  ```cls
+  ```bash
   >  npm init wdio . -- --yes
   ```
 * Install Cucumber
-  ```cls
+  ```bash
   >  npm install --save-dev @wdio/cucumber-framework
   ```
 <hr>
-🚀 Running Tests
+🚀 TESTS RUNNING
 <hr>
 
 - Run the tests
-  ```cls
-  > npx wdio
+  ```bash
+    > npx wdio
   ```
 - In order to run the tests you need
-  ```cls
+  ```bash
     > npx wdio --spec ./features/login.feature
-
+  ```
+- If your .feature files use tags, you can run only a specific scenario
+  Add a tag to login.feature:
+  ```gherkin
+    @login
+    Scenario: User logs in with valid credentials
+  ```
+  Run the test with the tag:
+  ```sh
+    npx wdio --cucumberOpts.tagExpression="@login"
   ```
 <hr>
-📊 Reporting
+📊 REPORTING
 <hr>
 
 * Install Allure Report
 
-  ```cls
-  >  npm install --save-dev @wdio/allure-reporter
+  ```bash
+    >  npm install --save-dev @wdio/allure-reporter
   ```
 * You need add to wdio.conf.js
 
-  ```sh
-  >  reporters: ['spec', ['allure', { outputDir: 'allure-results' }]],
+  ```javascript
+    >  reporters: [['allure', { outputDir: 'allure-results' }]],
   ```
 * Run report with Allure
 
-  ```cli
-  >  npx allure generate allure-results --clean && npx allure open
+  ```bash
+    >  npx allure generate allure-results --clean && npx allure open
   ```
 <hr>
-🔧 CICD Integration
+🔧 CICD INTEGRATION
 <hr>
 If you plan to integrate WebdriverIO + Cucumber into GitHub Actions, GitLab CI/CD, or Jenkins, create a configuration for CI.
 
 * Example command to run tests in CI
-  ```cli
-  >  npx wdio run wdio.conf.js --suite regression
+  ```bash
+    >  npx wdio run wdio.conf.js --suite regression
   ```
