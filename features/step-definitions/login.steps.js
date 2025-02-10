@@ -1,6 +1,6 @@
 const { Given, When, Then } = require('@wdio/cucumber-framework');
-const LoginPage = require('../../pageobjects/login.page');
-const pages = { login: LoginPage }
+const loginPage = require('../../pageobjects/login.page');
+const pages = { login: loginPage }
 
 Given(/^User on the (\w+) page$/, async (page) => {
     if (!pages[page]) {
@@ -10,15 +10,18 @@ Given(/^User on the (\w+) page$/, async (page) => {
 });
 
 When(/^User logins with (\w+) and (.+)$/, async (username, password) => {
-    await LoginPage.login(username, password)
+    await loginPage.login(username, password)
 });
 
 Then(/^User should see (.*)$/, async (result) => {
     if (result.includes('Username and password do not match any user')) {
-        await expect(await LoginPage.isErrorMessageDisplayed()).toBe(true);
-        await expect(await LoginPage.getErrorMessage(result));
-        await expect(await LoginPage.isOnLoginPage()).toBe(true);
+        const errorMessage = await loginPage.getErrorMessage();
+        const expectedMessage = result.replace(/['"]+/g, '');
+
+        await expect(await loginPage.isErrorMessageDisplayed()).toBe(true);
+        await expect(errorMessage).toContain(expectedMessage);
+        await expect(await loginPage.isOnLoginPage()).toBe(true);
     } else if (result.startsWith('URL should be')) {
-        await expect(await LoginPage.isOnInventoryPage()).toBe(true);
+        await expect(await loginPage.isOnInventoryPage()).toBe(true);
     }
 });

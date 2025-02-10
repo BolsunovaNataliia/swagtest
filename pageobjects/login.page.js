@@ -26,7 +26,7 @@ class LoginPage extends Page {
     async isErrorMessageDisplayed() {
         return await this.errorMessage.isDisplayed();    }
 
-    async getErrorMessage(message) {
+    async getErrorMessage() {
         return await this.errorMessage.getText();
     }
 }
